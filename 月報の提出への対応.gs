@@ -27,10 +27,11 @@ function onSaveMonthlyReportToSheet() {
 
   var start_rownum = 2;
   var start_colnum = 3;
-  var col_size = 3;
+  var col_size = 4;
 
   var emails_name_row  = name_rownum - start_rownum;  // スタッフ情報のうちの名前の行要素番号
   var emails_email_row = email_rownum - start_rownum; // スタッフ情報のうちのメルアドの行要素番号
+  var emails_id_row = id_rownum - start_rownum; // スタッフ情報のうちの社員番号の行要素番号
   
   // スタッフ情報の抽出
   var ss    = SpreadsheetApp.getActive().getSheetByName( monthly_sheet_name );
@@ -63,6 +64,16 @@ function onSaveMonthlyReportToSheet() {
         // to
         var to = getAddress(msg.getTo());
         
+        // body
+        var body = msg.getPlainBody();
+        var id = body.match(/社員番号：(\d+)/);
+        if (id == null) {
+          staff_id = '';
+        } else {
+          staff_id = id[1];
+        }
+        Logger.log(staff_id);
+        
         var col = 0;
                 
         for(var i=0;i<emails[emails_email_row].length;i++){
@@ -72,8 +83,9 @@ function onSaveMonthlyReportToSheet() {
           }
         
           Logger.log(emails[emails_email_row][i]);
+          Logger.log(emails[emails_id_row][i]);
       
-          if(emails[emails_email_row][i] === from){
+          if(emails[emails_email_row][i] === from || emails[emails_id_row][i] == staff_id){
           //if(emails[emails_email_row][i] === to){
           
             col = i + 1 + 1; // 列は1から開始 & 1列目は見出し列 TODO:マジックナンバー
@@ -82,7 +94,7 @@ function onSaveMonthlyReportToSheet() {
             
               // 月報の返信メールテンプレートの取得
               
-              var response_text  = getWeeklyReportResponseMailText();
+              var response_text  = getMonthlyReportResponseMailText();
     
               // はてなブックマーク情報の取得
                             
@@ -123,7 +135,7 @@ function onSaveMonthlyReportToSheet() {
   }
 }
 
-function getWeeklyReportResponseMailText() {
+function getMonthlyReportResponseMailText() {
 
   var mail_template_row = 6; // メールテンプレート内の「月報の返信メールテンプレート」の行番号
   var mail_template_col = 1; // メールテンプレート内の「月報の返信メールテンプレート」の列番号

@@ -4,7 +4,7 @@
 // =============================
 
 // リーダー用メールアドレス
-var reader_mail_to = 'matsushige@se-project.co.jp,izumi@se-project.co.jp,takano@se-project.co.jp,nakamurashinya@se-project.co.jp,machidatakahiro@se-project.co.jp,takenagakota@se-project.co.jp,naruseyuki@se-project.co.jp,takahashi@se-project.co.jp,takayama@se-project.co.jp';
+var reader_mail_to = 'izumi@se-project.co.jp,takano@se-project.co.jp,nakamurashinya@se-project.co.jp,machidatakahiro@se-project.co.jp,takenagakota@se-project.co.jp,takahashi@se-project.co.jp,takayama@se-project.co.jp';
 //var reader_mail_to = 'fieldhawker+reader@gmail.com';
 
 
@@ -14,7 +14,7 @@ var reader_mail_to = 'matsushige@se-project.co.jp,izumi@se-project.co.jp,takano@
 
 // 行と列の指定 (R1C1) // 1 -
 
-var result_row = 6;  // 済と入力する行番号
+var result_row = 7;  // 済と入力する行番号
 
 // 行と列の指定 (要素番号) 0 -
 
@@ -23,7 +23,8 @@ var group_addr_rownum = 1;
 var name_rownum   = 2;
 var tel_rownum    = 3;
 var email_rownum  = 4;
-var result_rownum = 5;  // 済と入力する行番号
+var id_rownum     = 5;
+var result_rownum = 6;  // 済と入力する行番号
 
 
 // =============================

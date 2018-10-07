@@ -36,11 +36,11 @@ function checkNotSubmitter() {
 
 
   // =============================
-  // シートの1行目2列目から6行分の社員情報を取得
+  // シートの1行目2列目から7行分の社員情報を取得
   // =============================
 
   var ss     = SpreadsheetApp.getActive().getSheetByName( weekly_sheet_name );
-  var range  = ss.getRange(1,2,6,staff_count) // TODO:マジックナンバー
+  var range  = ss.getRange(1,2,result_row,staff_count) // TODO:マジックナンバー
   var emails = range.getValues();
   
   Logger.log('-- 調査対象となるメールアドレス ---');
@@ -93,6 +93,25 @@ function checkNotSubmitter() {
 //  var files   = new Array();//添付ファイル，どんな型でも，いくつでも格納できる配列，
 //  var body    = "";
   
+  // ------------------------
+  // リーダーへ未提出者の通知
+  // ------------------------
+  
+  // IFTTTを経由してメール送信
+  var tmp   = new Object();
+  tmp.mail  = reader_mail_to;
+  tmp.title = reader_mail_title;
+  
+  if (not_submitters.length <= 0) {
+    tmp.body = reader_text.replace(/__TARGET__/,not_found_message);
+  } else {
+    tmp.body = reader_text.replace(/__TARGET__/,getStaffString().join('\r\n'));
+  }
+  
+  sendMailHookRequest(remind_hook_event, tmp);
+
+  Utilities.sleep(5000);
+  
   // =============================
   // 各自へリマインドメールの送信
   // =============================
@@ -115,27 +134,8 @@ function checkNotSubmitter() {
 //    body  = staff_text.replace(/__NAME__/,not_names[i]).replace(/__MAIL_ADDRESS__/,not_submitters[i]);
 //    MailApp.sendEmail({to:toAdr, cc:ccAdr, bcc:bccAdr, subject:subject, name:name, body:body, attachments:files});
 
-    Utilities.sleep(1000);
+    Utilities.sleep(15000);
     
   }
-  
-  // ------------------------
-  // リーダーへ未提出者の通知
-  // ------------------------
-  
-  // IFTTTを経由してメール送信
-  var tmp   = new Object();
-  tmp.mail  = reader_mail_to;
-  tmp.title = reader_mail_title;
-  
-  if (not_submitters.length <= 0) {
-    tmp.body = reader_text.replace(/__TARGET__/,not_found_message);
-  } else {
-    tmp.body = reader_text.replace(/__TARGET__/,getStaffString().join('\r\n'));
-  }
-  
-  sendMailHookRequest(remind_hook_event, tmp);
-
-  Utilities.sleep(1000);
   
 }

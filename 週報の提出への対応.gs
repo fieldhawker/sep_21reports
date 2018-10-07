@@ -27,10 +27,11 @@ function onSaveReportToSheet() {
 
   var start_rownum = 2;
   var start_colnum = 3;
-  var col_size = 3;
+  var col_size = 4;
 
   var emails_name_row  = name_rownum - start_rownum;  // スタッフ情報のうちの名前の行要素番号
   var emails_email_row = email_rownum - start_rownum; // スタッフ情報のうちのメルアドの行要素番号
+  var emails_id_row = id_rownum - start_rownum; // スタッフ情報のうちの社員番号の行要素番号
   
   // スタッフ情報の抽出
   var ss    = SpreadsheetApp.getActive().getSheetByName( weekly_sheet_name );
@@ -63,6 +64,16 @@ function onSaveReportToSheet() {
         // to
         var to = getAddress(msg.getTo());
         
+        // body
+        var body = msg.getPlainBody();
+        var id = body.match(/社員番号：(\d+)/);
+        if (id == null) {
+          staff_id = '';
+        } else {
+          staff_id = id[1];
+        }
+        Logger.log(staff_id);
+        
         var col = 0;
                 
         for(var i=0;i<emails[emails_email_row].length;i++){
@@ -72,8 +83,9 @@ function onSaveReportToSheet() {
           }
         
           Logger.log(emails[emails_email_row][i]);
+          Logger.log(emails[emails_id_row][i]);
       
-          if(emails[emails_email_row][i] === from){
+          if(emails[emails_email_row][i] === from || emails[emails_id_row][i] == staff_id){
           //if(emails[emails_email_row][i] === to){
           
             col = i + 1 + 1; // 列は1から開始 & 1列目は見出し列 TODO:マジックナンバー
