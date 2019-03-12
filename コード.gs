@@ -4,7 +4,7 @@
 // =============================
 
 // リーダー用メールアドレス
-var reader_mail_to = 'izumi@se-project.co.jp,takano@se-project.co.jp,nakamurashinya@se-project.co.jp,machidatakahiro@se-project.co.jp,takenagakota@se-project.co.jp,takahashi@se-project.co.jp,takayama@se-project.co.jp';
+var reader_mail_to = 'izumi@se-project.co.jp,takano@se-project.co.jp,nakamurashinya@se-project.co.jp,konnochikara@se-project.co.jp,takiminaohiro@se-project.co.jp,takahashi@se-project.co.jp,takayama@se-project.co.jp';
 //var reader_mail_to = 'fieldhawker+reader@gmail.com';
 
 

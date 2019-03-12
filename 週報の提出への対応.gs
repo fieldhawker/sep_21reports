@@ -66,7 +66,7 @@ function onSaveReportToSheet() {
         
         // body
         var body = msg.getPlainBody();
-        var id = body.match(/社員番号：(\d+)/);
+        var id = body.match(/社員番号 : (\d+)/);
         if (id == null) {
           staff_id = '';
         } else {
